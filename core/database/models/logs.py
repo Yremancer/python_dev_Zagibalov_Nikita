@@ -1,24 +1,26 @@
-from sqlalchemy.orm import Mapped, mapped_column
-from database import BaseLog
-from sqlalchemy import ForeignKey, DateTime
 from datetime import datetime as dt
 
+from sqlalchemy import DateTime, ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column
 
-class SpaceType(BaseLog):
+from core.database.database import BaseLog
+
+
+class SpaceTypeOrm(BaseLog):
     __tablename__ = "space_type"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str]
 
 
-class EventType(BaseLog):
+class EventTypeOrm(BaseLog):
     __tablename__ = "event_type"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str]
 
 
-class Log(BaseLog):
+class LogOrm(BaseLog):
     __tablename__ = "logs"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -28,5 +30,4 @@ class Log(BaseLog):
     event_type_id: Mapped[int] = mapped_column(ForeignKey("event_type.id"))
 
     user_id: Mapped[int]
-    entity_id
-    
+    entity_id: Mapped[int]

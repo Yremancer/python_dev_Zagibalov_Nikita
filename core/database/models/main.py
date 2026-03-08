@@ -1,9 +1,10 @@
-from sqlalchemy.orm import Mapped, mapped_column
-from database import Base
 from sqlalchemy import ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column
+
+from core.database.database import Base
 
 
-class User(Base):
+class UserOrm(Base):
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -11,7 +12,7 @@ class User(Base):
     email: Mapped[str] = mapped_column(unique=True)
 
 
-class Blog(Base):
+class BlogOrm(Base):
     __tablename__ = "blog"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -22,7 +23,7 @@ class Blog(Base):
     owner_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
 
 
-class Post(Base):
+class PostOrm(Base):
     __tablename__ = "post"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -34,7 +35,7 @@ class Post(Base):
     blog_id: Mapped[int] = mapped_column(ForeignKey("blog.id"))
 
 
-class Comment(Base):
+class CommentOrm(Base):
     __tablename__ = "comment"
 
     id: Mapped[int] = mapped_column(primary_key=True)
