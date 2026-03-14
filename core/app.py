@@ -1,13 +1,11 @@
 from contextlib import asynccontextmanager
 
-from fastapi import APIRouter, FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi import APIRouter, FastAPI
 
 from core.api.dataset_router import dataset_router
-from core.api.responces import CustomResponse
 from core.database.database import create_tables
 from core.database.seed import seed_all
-from core.exceptions import CustomHTTPException
+from core.exceptions.exception_handlers import register_exception_handlers
 from core.log import get_logger, setup_logger
 
 
@@ -25,14 +23,6 @@ router = APIRouter(prefix="/api")
 router.include_router(dataset_router)
 
 
-app.include_router(router)
+app.include_router(router=router)
 
-
-@app.exception_handler(Exception)
-async def global_exception_handler(request: Request, exc: Exception):
-    logger.error(f"{request.url.path}: {exc}", exc_info=True)
-    error_data = CustomResponse.from_exception(CustomHTTPException)
-    return JSONResponse(
-        status_code=500,
-        content=error_data[500]["content"]["application/json"]["example"],
-    )
+register_exception_handlers(app=app)

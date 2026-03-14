@@ -1,33 +1,36 @@
 from datetime import datetime as dt
 
-from sqlalchemy import DateTime, ForeignKey
+from sqlalchemy import DateTime, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from core.database.database import BaseLog
+from core.database.database import Base
 
 
-class SpaceTypeOrm(BaseLog):
+class SpaceTypeOrm(Base):
     __tablename__ = "space_type"
+    __table_args__ = {"schema": "logs"}
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str]
+    name: Mapped[str] = mapped_column(String(255))
 
 
-class EventTypeOrm(BaseLog):
+class EventTypeOrm(Base):
     __tablename__ = "event_type"
+    __table_args__ = {"schema": "logs"}
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str]
+    name: Mapped[str] = mapped_column(String(255))
 
 
-class LogOrm(BaseLog):
+class LogOrm(Base):
     __tablename__ = "logs"
+    __table_args__ = {"schema": "logs"}
 
     id: Mapped[int] = mapped_column(primary_key=True)
     datetime: Mapped[dt] = mapped_column(DateTime)
 
-    space_type_id: Mapped[int] = mapped_column(ForeignKey("space_type.id"))
-    event_type_id: Mapped[int] = mapped_column(ForeignKey("event_type.id"))
+    space_type_id: Mapped[int] = mapped_column(ForeignKey("logs.space_type.id"))
+    event_type_id: Mapped[int] = mapped_column(ForeignKey("logs.event_type.id"))
 
     user_id: Mapped[int]
     entity_id: Mapped[int]

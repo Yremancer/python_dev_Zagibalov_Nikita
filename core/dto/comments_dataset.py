@@ -1,5 +1,3 @@
-from datetime import date
-
 from pydantic import BaseModel
 
 
@@ -12,14 +10,3 @@ class CommentDatasetRow(BaseModel):
 
 class CommentDatasetDTO(BaseModel):
     dataset: list[CommentDatasetRow]
-
-
-class GeneralDatasetRow(BaseModel):
-    data: date
-    login_count: int
-    logout_count: int
-    blog_event_conut: int
-
-
-class GeneralDatasetDTO(BaseModel):
-    dataset: list[GeneralDatasetRow]

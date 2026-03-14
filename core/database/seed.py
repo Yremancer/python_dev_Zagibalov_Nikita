@@ -2,10 +2,7 @@ from datetime import datetime
 
 from sqlalchemy import select
 
-from core.database.database import (
-    logs_async_session_maker,
-    main_async_session_maker,
-)
+from core.database.database import async_session_maker
 from core.database.models.logs import EventTypeOrm, LogOrm, SpaceTypeOrm
 from core.database.models.main import BlogOrm, CommentOrm, PostOrm, UserOrm
 from core.log import get_logger
@@ -14,12 +11,12 @@ logger = get_logger(__name__)
 
 
 async def seed_main_db():
-    async with main_async_session_maker() as session:
+    async with async_session_maker() as session:
         result = await session.execute(select(UserOrm).limit(1))
         if result.scalar_one_or_none() is not None:
             return
 
-    async with main_async_session_maker() as session:
+    async with async_session_maker() as session:
         async with session.begin():
             alice = UserOrm(id=1, login="alice", email="alice@example.com")
             bob = UserOrm(id=2, login="bob", email="bob@example.com")
@@ -83,16 +80,16 @@ async def seed_main_db():
                 CommentOrm(text="Классный гайд!", author_id=1, post_id=2),
             ]
             session.add_all(comments)
-    logger.info("Tables created")
+    logger.info("Main DB seeded")
 
 
 async def seed_logs_db():
-    async with logs_async_session_maker() as session:
+    async with async_session_maker() as session:
         result = await session.execute(select(SpaceTypeOrm).limit(1))
         if result.scalar_one_or_none() is not None:
             return
 
-    async with logs_async_session_maker() as session:
+    async with async_session_maker() as session:
         async with session.begin():
             space_global = SpaceTypeOrm(id=1, name="global")
             space_blog = SpaceTypeOrm(id=2, name="blog")

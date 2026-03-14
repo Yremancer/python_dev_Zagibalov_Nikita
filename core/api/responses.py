@@ -1,6 +1,9 @@
 from pydantic import BaseModel
 
-from core.exceptions import CustomHTTPException, UserNotFoundHTTPException
+from core.exceptions.exceptions import (
+    CustomHTTPException,
+    UserNotFoundHTTPException,
+)
 
 
 class CustomResponse(BaseModel):

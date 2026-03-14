@@ -19,7 +19,7 @@ class CustomHTTPException(HTTPException):
         final_detail = detail or self.detail
         final_status = status_code or self.status_code
         final_error_code = error_code or self.error_code
-        
+
         super().__init__(
             status_code=final_status,
             detail={"message": final_detail, "error_code": final_error_code},
@@ -34,8 +34,4 @@ class NotFoundHTTPException(CustomHTTPException):
 
 class UserNotFoundHTTPException(NotFoundHTTPException):
     detail = "Пользователь не найден"
-    error_code = "USER_NOT_FOUND"
-    error_code = "USER_NOT_FOUND"
-    error_code = "USER_NOT_FOUND"
-    error_code = "USER_NOT_FOUND"
     error_code = "USER_NOT_FOUND"
