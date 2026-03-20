@@ -8,7 +8,6 @@ from sqlalchemy.ext.asyncio import (
 from sqlalchemy.orm import DeclarativeBase
 
 from core.config import get_settings
-from core.log import get_logger
 
 
 class Base(DeclarativeBase):
@@ -40,10 +39,3 @@ async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
             await session.close()
 
 
-async def create_tables():
-    # import core.database.models.logs  # noqa: F401
-    # import core.database.models.main  # noqa: F401
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-    logger = get_logger(__name__)
-    logger.info("Tables created")
