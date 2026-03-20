@@ -7,7 +7,7 @@ from core.dto.comments_dataset import CommentDatasetDTO
 from core.dto.general_dataset import GeneralDatasetDTO
 from core.services.dataset_service import DatasetService
 
-dataset_router = APIRouter()
+dataset_router = APIRouter(tags=["Dataset"])
 
 
 @dataset_router.get(
