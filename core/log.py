@@ -1,9 +1,12 @@
 import logging
 
+from core.config import get_settings
+
 
 def setup_logger():
+    settings = get_settings()
     root_logger = logging.getLogger()
-    root_logger.setLevel(logging.INFO)
+    root_logger.setLevel(settings.log_level.upper())
 
     if root_logger.hasHandlers():
         root_logger.handlers.clear()

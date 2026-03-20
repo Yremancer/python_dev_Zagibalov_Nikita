@@ -7,6 +7,9 @@ from core.database.models.main import CommentOrm, PostOrm, UserOrm
 from core.dto.comments_dataset import CommentDatasetDTO
 from core.dto.general_dataset import GeneralDatasetDTO
 from core.exceptions.exceptions import UserNotFoundHTTPException
+from core.log import get_logger
+
+logger = get_logger(__name__)
 
 
 class DatasetService:
@@ -27,6 +30,7 @@ class DatasetService:
         return user
 
     async def get_comment_dataset(self, login: str) -> CommentDatasetDTO:
+        logger.info("Fetching comment dataset for login=%s", login)
         await self._get_user_or_raise(login)
 
         PostAuthor = aliased(UserOrm, name="post_author")
@@ -49,6 +53,7 @@ class DatasetService:
         return CommentDatasetDTO(dataset=dataset)
 
     async def get_general_dataset(self, login: str) -> GeneralDatasetDTO:
+        logger.info("Fetching general dataset for login=%s", login)
         await self._get_user_or_raise(login)
 
         query = (
