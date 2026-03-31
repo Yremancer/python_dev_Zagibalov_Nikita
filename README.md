@@ -5,7 +5,7 @@
 Создать .env файл в корне проекта по примеру .env.example
 
 ```bash
-docker compose up --build
+make start
 ```
 
 API доступно по адресу: `http://localhost:8000`
